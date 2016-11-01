@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.humbleai.randomizer.ViewSetActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAppCaption"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarViewSet"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <include layout="@layout/content_view_set"/>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberpicker_kac_tane"
+        android:layout_gravity="bottom|start"
+        android:alpha="0.5"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabGetOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_get_one" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollIcon"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="-24dp"
+        android:layout_marginRight="-24dp"/>
+</android.support.design.widget.CoordinatorLayout>
