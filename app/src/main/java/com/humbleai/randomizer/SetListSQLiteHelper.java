@@ -18,16 +18,16 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
 
     private final Context context;
 
-    // Database Version
+
     private static final int DATABASE_VERSION = R.integer.db_version;
-    // Database Name
+
     private static final String DATABASE_NAME = "SetsDB";
 
 
-    // SetList table name
+
     private static final String TABLE_SETLISTS = "SetList";
 
-    // SetList Table Columns names
+
     private static final String KEY_ID = "id";
     private static final String KEY_ICON = "icon";
     private static final String KEY_TITLE = "title";
@@ -47,7 +47,7 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        // SQL statement to create SetList table
+
         String CREATE_SETLIST_TABLE = "CREATE TABLE SetList ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "icon INTEGER, "+
@@ -57,7 +57,7 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
                 "settype BOOLEAN)";
 
 
-        // create SetLists table
+
         db.execSQL(CREATE_SETLIST_TABLE);
 
         Resources res = context.getResources();
@@ -82,7 +82,7 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
         sets_set_types.recycle();
 
 
-        // SQL statement to create item table
+
         String CREATE_ITEM_TABLE = "CREATE TABLE SetItem ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "parentSetId INTEGER, "+
@@ -92,7 +92,7 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
                 "settype TEXT, " +
                 "excluded INTEGER )";
 
-        // create books table
+
         db.execSQL(CREATE_ITEM_TABLE);
 
 
@@ -246,22 +246,22 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
     public Long addSetList(SetList setlist){
 
 
-        // 1. get reference to writable DB
+
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
-        ContentValues values = new ContentValues();
-        values.put(KEY_ICON, setlist.getIcon()); // get icon
-        values.put(KEY_TITLE, setlist.getTitle()); // get title
-        values.put(KEY_DESCRIPTION, setlist.getDescription()); // get desc
-        values.put(KEY_PRIMARY, setlist.getPrime()); // get title
-        values.put(KEY_SETTYPE, setlist.getSetType()); // get desc
-        // 3. insert
-        Long inserted = db.insert(TABLE_SETLISTS, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
 
-        // 4. close
+        ContentValues values = new ContentValues();
+        values.put(KEY_ICON, setlist.getIcon());
+        values.put(KEY_TITLE, setlist.getTitle());
+        values.put(KEY_DESCRIPTION, setlist.getDescription());
+        values.put(KEY_PRIMARY, setlist.getPrime());
+        values.put(KEY_SETTYPE, setlist.getSetType());
+
+        Long inserted = db.insert(TABLE_SETLISTS,
+                null,
+                values);
+
+
       //  db.close();
         return inserted;
     }
@@ -269,25 +269,25 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
 
     public SetList getSetList(int id){
 
-        // 1. get reference to readable DB
+
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // 2. build query
-        Cursor cursor =
-                db.query(TABLE_SETLISTS, // a. table
-                        COLUMNS, // b. column names
-                        " id = ?", // c. selections
-                        new String[] { String.valueOf(id) }, // d. selections args
-                        null, // e. group by
-                        null, // f. having
-                        null, // g. order by
-                        null); // h. limit
 
-        // 3. if we got results get the first one
+        Cursor cursor =
+                db.query(TABLE_SETLISTS,
+                        COLUMNS,
+                        " id = ?",
+                        new String[] { String.valueOf(id) },
+                        null,
+                        null,
+                        null,
+                        null);
+
+
         if (cursor != null)
             cursor.moveToFirst();
 
-        // 4. build setlist object
+
         SetList setlist = new SetList();
         assert cursor != null;
         setlist.setId(Integer.parseInt(cursor.getString(0)));
@@ -298,7 +298,7 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
         setlist.setSetType(cursor.getString(5));
 
         cursor.close();
-        // 5. return setlist
+
         return setlist;
     }
 
@@ -306,14 +306,14 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
     public List<SetList> getAllSetLists() {
         List<SetList> setlists = new LinkedList<>();
 
-        // 1. build the query
+
         String query = "SELECT  * FROM " + TABLE_SETLISTS;
 
-        // 2. get reference to writable DB
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build setlist and add it to list
+
         SetList setlist;
         if (cursor.moveToFirst()) {
             do {
@@ -325,37 +325,37 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
                 setlist.setPrime(cursor.getString(4));
                 setlist.setSetType(cursor.getString(5));
 
-                // Add setlist to setlists
+
                 setlists.add(setlist);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        // return setlists
+
         return setlists;
     }
 
 
     public int updateSetList(SetList setlist) {
 
-        // 1. get reference to writable DB
+
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
+
         ContentValues values = new ContentValues();
-        values.put("icon", setlist.getIcon()); // get icon
-        values.put("title", setlist.getTitle()); // get title
-        values.put("description", setlist.getDescription()); // get description
+        values.put("icon", setlist.getIcon());
+        values.put("title", setlist.getTitle());
+        values.put("description", setlist.getDescription());
         values.put("prime", setlist.getPrime());
         values.put("settype", setlist.getSetType());
 
-        // 3. updating row
-        int i = db.update(TABLE_SETLISTS, //table
-                values, // column/value
-                KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(setlist.getId()) }); //selection args
+
+        int i = db.update(TABLE_SETLISTS,
+                values,
+                KEY_ID+" = ?",
+                new String[] { String.valueOf(setlist.getId()) });
 
 
-        // 4. close
+
      //   db.close();
 
         return i;
@@ -365,18 +365,18 @@ class SetListSQLiteHelper extends SQLiteOpenHelper {
 
     public void deleteSetList(int setId) {
 
-        // 1. get reference to writable DB
+
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. delete
-        db.delete(TABLE_SETLISTS, //table name
-                KEY_ID + " = ?",  // selections
-                new String[]{String.valueOf(setId)}); //selections args
+
+        db.delete(TABLE_SETLISTS,
+                KEY_ID + " = ?",
+                new String[]{String.valueOf(setId)});
 
         String query = "DELETE FROM SetItem WHERE parentSetId = " + setId;
         db.execSQL(query);
 
-        // 3. close
+
       //  db.close();
 
 

@@ -39,7 +39,6 @@ public class SetItemAdapter extends RecyclerView.Adapter<SetItemAdapter.ViewHold
     private final SharedPreferences settings;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
 
         public CardView mCard;
         public final TextView mTextViewTitle;
@@ -87,12 +86,12 @@ public class SetItemAdapter extends RecyclerView.Adapter<SetItemAdapter.ViewHold
         settings = mContext.getSharedPreferences(ScrollingActivity.PREFS_NAME, 0);
     }
 
-    // Create new views (invoked by the layout manager)
+
     @Override
     public SetItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v ;
-        // create a new view
+
         switch (viewType) {
             case 1: // sonuc
                 v = LayoutInflater.from(parent.getContext())
@@ -113,7 +112,7 @@ public class SetItemAdapter extends RecyclerView.Adapter<SetItemAdapter.ViewHold
 
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
        final SetItem setItem = mDataset.get(position);
@@ -355,7 +354,7 @@ public class SetItemAdapter extends RecyclerView.Adapter<SetItemAdapter.ViewHold
         return Color.parseColor(String.format("#%06X", 0xFFFFFF & c));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+
     @Override
     public int getItemCount() {
 

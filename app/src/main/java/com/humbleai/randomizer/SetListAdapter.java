@@ -32,7 +32,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.ViewHold
     private final SharedPreferences settings;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
 
         public final CardView mCard;
         public final TextView mTextViewTitle;
@@ -59,24 +59,23 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.ViewHold
         settings = mContext.getSharedPreferences(ScrollingActivity.PREFS_NAME, 0);
     }
 
-    // Create new views (invoked by the layout manager)
+
     @Override
     public SetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
-        // create a new view
+
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycle_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+
 
         return new ViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
          final SetList setListItem = mDataset.get(position);
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+
         if (settings.getBoolean("action_settings_animations_list", false)) {
             holder.mCard.setAlpha(0);
             holder.mCard.animate().setDuration(800);
@@ -286,7 +285,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.ViewHold
     }
 
 
-    // Return the size of your dataset (invoked by the layout manager)
+
     @Override
     public int getItemCount() {
         return (null != mDataset ? mDataset.size() : 0);
